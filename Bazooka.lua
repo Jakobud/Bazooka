@@ -2373,11 +2373,16 @@ function Bazooka:disableDBIcon()
     return
   end
   local DBIcon = LibStub:GetLibrary("LibDBIcon-1.0", true)
-  if DBIcon and DBIcon.Hide then
-    for k,_ in pairs(DBIcon.objects) do
-      DBIcon:Hide(k)
+  if DBIcon then
+    if DBIcon.Hide then
+      for k,_ in pairs(DBIcon.objects) do
+        DBIcon:Hide(k)
+      end
+      self.isDBIconDisabled = true
+    elseif DBIcon.DisableLibrary then
+      DBIcon:DisableLibrary()
+      self.isDBIconDisabled = true
     end
-    self.isDBIconDisabled = true
   end
 end
 
@@ -2386,11 +2391,16 @@ function Bazooka:enableDBIcon()
     return
   end
   local DBIcon = LibStub:GetLibrary("LibDBIcon-1.0", true)
-  if DBIcon and DBIcon.Show then
-    for k,_ in pairs(DBIcon.objects) do
-      DBIcon:Show(k)
+  if DBIcon then
+    if DBIcon.Show then
+      for k,_ in pairs(DBIcon.objects) do
+        DBIcon:Show(k)
+      end
+      self.isDBIconDisabled = nil
+    elseif DBIcon.EnableLibrary then
+      DBIcon:EnableLibrary()
+      self.isDBIconDisabled = nil
     end
-    self.isDBIconDisabled = nil
   end
 end
 
